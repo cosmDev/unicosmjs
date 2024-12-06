@@ -194,7 +194,7 @@ async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr
       JSON.parse(
         JSON.stringify(
           { 
-            [finalExecName.queryName]: finalDataArray
+            [finalExecName.exectuteName]: finalDataArray
           }
         )
       ),
