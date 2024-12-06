@@ -175,9 +175,7 @@ async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr
       gasPrice: GasPrice.fromString(chainGas + chaindenom),
     },
   );
-  console.log('simplemessage', message)
-  console.log(JSON.parse(message))
-  console.log('stringifymessage', JSON.stringify(message))
+
   console.log('execName', JSON.parse(execName))
   console.log('execData', JSON.parse(execData))
   
