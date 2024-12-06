@@ -131,7 +131,7 @@ async function sendToken(chainId, chainRpc, chainGas, chaindenom, to, amount, si
     return error;
   } 
 }
-
+/*
 async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr, message, signerType) { 
 
   let offlineSigner = await selectSigner(chainId, signerType)  
@@ -162,6 +162,53 @@ async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr
     console.log(error)
   }
   console.log("accounts", accounts)
+} */
+async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr, execName, execData, signerType) { 
+
+  let offlineSigner = await selectSigner(chainId, signerType)  
+  const accounts = await offlineSigner.getAccounts();
+
+  const client = await SigningCosmWasmClient.connectWithSigner(
+    chainRpc,
+    offlineSigner,
+    {
+      gasPrice: GasPrice.fromString(chainGas + chaindenom),
+    },
+  );
+  console.log('simplemessage', message)
+  console.log(JSON.parse(message))
+  console.log('stringifymessage', JSON.stringify(message))
+  console.log('execName', JSON.parse(execName))
+  console.log('execData', JSON.parse(execData))
+  
+  let finalExecName = JSON.parse(execName)
+  let finalExecData = JSON.parse(execData)
+
+  let finalDataArray = {}
+  for (const [key, value] of Object.entries(finalExecData.Items)) {
+    finalDataArray[value.key] = value.Value
+  }
+  
+  try {
+    const result = await client.execute(
+      accounts[0].address,
+      contractAddr,
+      JSON.parse(
+        JSON.stringify(
+          { 
+            [finalExecName.queryName]: finalDataArray
+          }
+        )
+      ),
+      "auto",
+      "",
+      "", // Send token
+    );
+    assertIsDeliverTxSuccess(result);
+  } catch(error) {
+    console.log(error)
+  }
+  console.log("accounts", accounts)
 }
 
 
@@ -175,7 +222,6 @@ async function wasmQuery(chainRpc, contractAddr, queryName, queryData) {
 
 
   let finalDataArray = {}
-
   for (const [key, value] of Object.entries(finalQueryData.Items)) {
     finalDataArray[value.key] = value.Value
   }
