@@ -1,6 +1,7 @@
 {
   "name": "@cosmdev/unicosmjs",
   "version": "1.0.0",
+  "private": false,
   "description": "",
   "main": "index.js",
   "scripts": {
