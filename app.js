@@ -31,61 +31,14 @@ async function initRpc(chainRpc) {
  
 async function selectSigner(chainId, signerType) { 
 
-      await window.keplr.experimentalSuggestChain({
-        chainId: "osmo-test-5",
-        chainName: "Osmosis-testnet",
-        rpc: "https://rpc.testnet.osmosis.zone",
-        rest: "https://lcd.testnet.osmosis.zone",
-        bip44: {
-          coinType: 118,
-        },
-        bech32Config: {
-          bech32PrefixAccAddr: "osmo",
-          bech32PrefixAccPub: "osmopub",
-          bech32PrefixValAddr: "osmovaloper",
-          bech32PrefixValPub: "osmovaloperpub",
-          bech32PrefixConsAddr: "osmovalcons",
-          bech32PrefixConsPub: "osmovalconspub",
-        },
-        currencies: [
-          {
-            coinDenom: "OSMO",
-            coinMinimalDenom: "uosmo",
-            coinDecimals: 6,
-            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/osmosis/uosmo.png"
-          },
-          {
-            coinDenom: "ION",
-            coinMinimalDenom: "uion",
-            coinDecimals: 6,
-            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/osmosis/uion.png"
-          }
-        ],
-        feeCurrencies: [
-          {
-            coinDenom: "OSMO",
-            coinMinimalDenom: "uosmo",
-            coinDecimals: 6,
-            coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/osmosis/uosmo.png",
-            gasPriceStep: {
-              low: 0.0025,
-              average: 0.025,
-              high: 0.04
-            }
-          }
-        ],
-        stakeCurrency: {
-          coinDenom: "OSMO",
-          coinMinimalDenom: "uosmo",
-          coinDecimals: 6,
-          coinImageUrl: "https://raw.githubusercontent.com/chainapsis/keplr-chain-registry/main/images/osmosis/uosmo.png"
-        }
-    })
-  
   if (signerType === "Keplr") {
-    await window.keplr.enable(chainId);
-    const offlineSigner = await window.getOfflineSignerAuto(chainId);
-    return offlineSigner;
+    if (!window.getOfflineSigner || !window.keplr) {
+      alert("Please install keplr extension");
+    } else {
+      await window.keplr.enable(chainId);
+      const offlineSigner = await window.getOfflineSignerAuto(chainId);
+      return offlineSigner;
+    }
   } else if (signerType === "Cosmostation") {
     await window.cosmostation.providers.keplr.enable(chainId); 
     const offlineSigner = window.cosmostation.providers.keplr.getOfflineSigner(chainId);
