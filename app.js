@@ -208,10 +208,11 @@ async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr
       "", // Send token
     );
     assertIsDeliverTxSuccess(result);
+    return result;
   } catch(error) {
     console.log(error)
-  }
-  console.log("accounts", accounts)
+    return error;
+  } 
 }
 
 
