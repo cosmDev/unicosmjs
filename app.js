@@ -29,7 +29,7 @@ async function initRpc(chainRpc) {
   return rpcClient;
 }
  
-async function selectSigner(chainId, signerType, suggestChain = "") { 
+async function selectSigner(chainId, signerType, suggestChain) { 
   const response = await fetch(suggestChain);
   const returnExperimentalSuggestChain = await response.json();
   await window.keplr.experimentalSuggestChain(
