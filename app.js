@@ -29,8 +29,13 @@ async function initRpc(chainRpc) {
   return rpcClient;
 }
  
-async function selectSigner(chainId, signerType) { 
-
+async function selectSigner(chainId, signerType, suggestChain = "") { 
+  const response = await fetch(suggestChain);
+  const returnExperimentalSuggestChain = await response.json();
+  await window.keplr.experimentalSuggestChain(
+    returnExperimentalSuggestChain,
+  ); 
+  
   if (signerType === "Keplr") {
     if (!window.getOfflineSigner || !window.keplr) {
       alert("Please install keplr extension");
@@ -89,11 +94,11 @@ async function signArbitrary(chainId, message, signerType) {
   return { signArbitrary, address };        
 }
 
-async function sendToken(chainId, chainRpc, chainGas, chaindenom, to, amount, signerType) { 
+async function sendToken(chainId, chainRpc, chainGas, chaindenom, to, amount, signerType, suggestChain) { 
   console.log("chainRpc", chainRpc)
   console.log("chainGas", chainGas)
 
-  let offlineSigner = await selectSigner(chainId, signerType)  
+  let offlineSigner = await selectSigner(chainId, signerType, suggestChain)  
   const accounts = await offlineSigner.getAccounts();
 
   const client = await SigningStargateClient.connectWithSigner(
