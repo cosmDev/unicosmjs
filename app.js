@@ -54,9 +54,9 @@ async function selectSigner(chainId, signerType, suggestChain) {
     return offlineSigner;
   } 
 }
-async function signerConnect(chainId, signerType) {
+async function signerConnect(chainId, signerType, suggestChain) {
   try {
-    let offlineSigner = await selectSigner(chainId, signerType)   
+    let offlineSigner = await selectSigner(chainId, signerType, suggestChain)   
     const accounts = await offlineSigner.getAccounts(); 
     console.log('console js ', accounts);  
     return accounts; 
@@ -65,8 +65,8 @@ async function signerConnect(chainId, signerType) {
   }
   
 }
-async function signArbitrary(chainId, message, signerType) {  
-  let offlineSigner = await selectSigner(chainId, signerType)   
+async function signArbitrary(chainId, message, signerType, suggestChain) {  
+  let offlineSigner = await selectSigner(chainId, signerType, suggestChain)   
   const accounts = await offlineSigner.getAccounts();
 
   let finalSinger = ""
@@ -173,9 +173,9 @@ async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr
   }
   console.log("accounts", accounts)
 } */
-async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr, execName, execData, signerType) { 
+async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr, execName, execData, signerType, suggestChain) { 
 
-  let offlineSigner = await selectSigner(chainId, signerType)  
+  let offlineSigner = await selectSigner(chainId, signerType, suggestChain)  
   const accounts = await offlineSigner.getAccounts();
 
   const client = await SigningCosmWasmClient.connectWithSigner(
