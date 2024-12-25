@@ -1,6 +1,7 @@
 {
   "name": "@cosmdev/unicosmjs",
-  "version": "1.0.15",
+  "homepage": "https://github.com/cosmDev/unicosmjs"
+  "version": "1.0.16",
   "private": false,
   "description": "Link your unity games to cosmos blockchains.",
   "main": "index.js",
@@ -24,5 +25,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/cosmDev/unicosmjs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/cosmDev/unicosmjs/issues" 
   }
 }
