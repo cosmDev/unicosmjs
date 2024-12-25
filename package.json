@@ -1,6 +1,6 @@
 {
   "name": "@cosmdev/unicosmjs",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "private": false,
   "description": "Link your unity games to cosmos blockchains.",
   "main": "index.js",
