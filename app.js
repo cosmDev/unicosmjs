@@ -20,9 +20,6 @@ import * as bank from "cosmjs-types/cosmos/bank/v1beta1/query";
 BigInt.prototype.toJSON = function() { return this.toString() }
 
 async function initRpc(chainRpc) {
-  /* if (this.rpcClient) {
-    this.rpcBase.disconnect();
-  } */
   const client = await Tendermint37Client.connect(chainRpc);
   const queryClient = new QueryClient(client);
   const rpcClient = createProtobufRpcClient(queryClient);
@@ -45,13 +42,21 @@ async function selectSigner(chainId, signerType, suggestChain) {
       return offlineSigner;
     }
   } else if (signerType === "Cosmostation") {
-    await window.cosmostation.providers.keplr.enable(chainId); 
-    const offlineSigner = window.cosmostation.providers.keplr.getOfflineSigner(chainId);
-    return offlineSigner;
+    if (!window.cosmostation) {
+      alert("Please install cosmostation extension");
+    } else {
+      await window.cosmostation.providers.keplr.enable(chainId); 
+      const offlineSigner = window.cosmostation.providers.keplr.getOfflineSigner(chainId);
+      return offlineSigner;
+    }
   } else if (signerType === 'Leap') {
-    await window.leap.enable(chainId); 
-    const offlineSigner = window.leap.getOfflineSigner(chainId);
-    return offlineSigner;
+    if (!window.leap) {
+      alert("Please install leap extension");
+    } else {
+      await window.leap.enable(chainId); 
+      const offlineSigner = window.leap.getOfflineSigner(chainId);
+      return offlineSigner;
+    }
   } 
 }
 async function signerConnect(chainId, signerType, suggestChain) {
@@ -141,38 +146,7 @@ async function sendToken(chainId, chainRpc, chainGas, chaindenom, to, amount, si
     return error;
   } 
 }
-/*
-async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr, message, signerType) { 
 
-  let offlineSigner = await selectSigner(chainId, signerType)  
-  const accounts = await offlineSigner.getAccounts();
-
-  const client = await SigningCosmWasmClient.connectWithSigner(
-    chainRpc,
-    offlineSigner,
-    {
-      gasPrice: GasPrice.fromString(chainGas + chaindenom),
-    },
-  );
-  console.log('simplemessage', message)
-  console.log(JSON.parse(message))
-  console.log('stringifymessage', JSON.stringify(message))
-  
-  try {
-    const result = await client.execute(
-      accounts[0].address,
-      contractAddr,
-      JSON.parse(message),
-      "auto",
-      "",
-      "", // Send token
-    );
-    assertIsDeliverTxSuccess(result);
-  } catch(error) {
-    console.log(error)
-  }
-  console.log("accounts", accounts)
-} */
 async function wasmExecute(chainId, chainRpc, chainGas, chaindenom, contractAddr, execName, execData, signerType, suggestChain) { 
 
   let offlineSigner = await selectSigner(chainId, signerType, suggestChain)  
