@@ -1,25 +1,28 @@
 {
   "name": "@cosmdev/unicosmjs",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": false,
-  "description": "",
+  "description": "Link your unity games to cosmos blockchains.",
   "main": "index.js",
   "scripts": {
     "build": "webpack"
   },
-  "keywords": [],
+  "keywords": ["Cosmos Sdk", "Unity", "Game"],
   "author": "cosmDev",
   "license": "ISC",
   "dependencies": {
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
     "@cosmjs/proto-signing": "^0.32.4",
     "@cosmjs/stargate": "^0.32.4",
-    "express": "^4.21.0",
     "html-webpack-plugin": "^5.6.0",
     "webpack": "^5.95.0",
     "workbox-webpack-plugin": "^7.1.0"
   },
   "devDependencies": {
     "webpack-cli": "^5.1.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cosmDev/unicosmjs.git"
   }
 }
