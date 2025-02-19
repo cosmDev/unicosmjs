@@ -63,8 +63,10 @@ async function signerConnect(chainId, signerType, suggestChain) {
   try {
     let offlineSigner = await selectSigner(chainId, signerType, suggestChain)   
     const accounts = await offlineSigner.getAccounts(); 
+    const getKey = await window.keplr.getKey(chainId); 
     console.log('console js ', accounts);  
-    return accounts; 
+    console.log('console js getKey ', getKey);  
+    return { accounts, getKey }; 
   } catch(error) {
     return error; 
   }
